@@ -11,12 +11,21 @@ change elasticsearchVersion to your version of ElasticSearch
 
 Start the river
 
-curl -XPUT localhost:9200/_river/my_river/_meta -d '
-{              
+Meetup.com example
+
+curl -XPUT localhost:9200/_river/meetup/_meta -d '
+{
     "type" : "simple-websocket",
-    "mapping" : {                
+    "uri" : "ws://stream.meetup.com/2/rsvps",
+    "id_field" : "rsvp_id",
+    "mapping" : {
         "rsvp_id"  : {"type" : "long", "store" : "yes"},
         "response" : {"type" : "string", "store" : "yes", "index" : "not_analyzed" }        
-     }
+     },
+     "index" : {
+        "index" : "meetup",
+        "type" : "rsvp"
+    }
 }
 '
+
